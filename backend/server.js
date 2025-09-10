@@ -11,17 +11,23 @@ const employeeRoutes = require('./routes/employee');
 const app = express();
 
 // Middleware
-app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'https://employee-work-allotment-frontend.onrender.com',
-    'https://employee-work-allotment-frontend.vercel.app'
-  ],
-  credentials: true
-}));
+app.use(cors());
 app.use(express.json());
 
-// Routes
+// 🚨 ADD TH TEST ROUTES FIRST - CRITICAL!
+app.get('/', (req, res) => {
+  res.send('Backend Server is Running!');
+});
+
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'OK', message: 'Backend is running', timestamp: new Date() });
+});
+
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'Test route is working!', success: true });
+});
+
+// Your existing routes
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/manager', managerRoutes);
